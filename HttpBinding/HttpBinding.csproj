@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,4 +8,12 @@
     <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.5" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <!-- For local/debug builds -->
+    <VersionSuffix Condition=" '$(Configuration)' == 'Debug' ">debug</VersionSuffix>
+    <!-- This is using variables that are specific to Azure Dev Ops Pipelines -->
+    <VersionSuffix Condition=" '$(Build_SourceBranch)' == 'refs/heads/develop' ">beta.$(Build_BuildID)</VersionSuffix>
+  </PropertyGroup>
 </Project>
