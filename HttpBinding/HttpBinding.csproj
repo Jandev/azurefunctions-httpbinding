@@ -15,5 +15,15 @@
     <VersionSuffix Condition=" '$(Configuration)' == 'Debug' ">debug</VersionSuffix>
     <!-- This is using variables that are specific to Azure Dev Ops Pipelines -->
     <VersionSuffix Condition=" '$(Build_SourceBranch)' == 'refs/heads/develop' ">beta.$(Build_BuildID)</VersionSuffix>
+    <PackageId>AzureFunctions.HttpBinding</PackageId>
+    <Authors>Jan de Vries</Authors>
+    <Company />
+    <Product>AzureFunctions.HttpBinding</Product>
+    <Description>A very lightweight HTTP binding extension for Azure Functions.</Description>
+    <PackageProjectUrl>https://github.com/Jandev/azurefunctions-httpbinding</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jandev/azurefunctions-httpbinding</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Azure Functions, HTTP, Azure</PackageTags>
+    <PackageReleaseNotes>Initial version supporting input binding using GET and output binding using POST and PUT.</PackageReleaseNotes>
   </PropertyGroup>
 </Project>
