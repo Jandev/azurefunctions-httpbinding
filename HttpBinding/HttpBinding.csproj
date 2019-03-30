@@ -23,7 +23,7 @@
     <PackageProjectUrl>https://github.com/Jandev/azurefunctions-httpbinding</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jandev/azurefunctions-httpbinding</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>Azure Functions, HTTP, Azure</PackageTags>
+    <PackageTags>Azure Functions, HTTP</PackageTags>
     <PackageReleaseNotes>Initial version supporting input binding using GET and output binding using POST and PUT.</PackageReleaseNotes>
   </PropertyGroup>
 </Project>
