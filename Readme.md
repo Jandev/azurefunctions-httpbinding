@@ -2,6 +2,16 @@
 
 This project is created to provide a simple HTTP Binding for Azure Functions.
 
+## Badges
+
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=code_smells)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=alert_status)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=security_rating)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=sqale_index)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=azurefunctions-httpbinding&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=azurefunctions-httpbinding)
+
+
 # Supported features
 
 The following commands are supported as of now.
