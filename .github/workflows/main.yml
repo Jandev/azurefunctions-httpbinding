@@ -10,6 +10,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Fetch all history for all tags and branches
+        run: git fetch --unshallow || true
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.4
+        with:
+            versionSpec: '5.3.x'
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v0.9.4
+      - run: |
+          echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
+          echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -24,4 +36,5 @@ jobs:
         uses: brandedoutcast/publish-nuget@v2.5.5
         with:
           PROJECT_FILE_PATH: HttpBinding/HttpBinding.csproj
+          VERSION_STATIC: ${{ steps.gitversion.outputs.nuGetVersion }}-${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}
           NUGET_KEY: ${{secrets.NUGET_KEY}}
