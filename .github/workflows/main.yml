@@ -54,3 +54,16 @@ jobs:
         with:
           name: Package ${{ steps.gitversion.outputs.nuGetVersionV2 }}
           path: ${{ env.OUTPUT_PATH }}
+
+      - name: Create release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Release ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}          
+          files: |
+            ${{ env.OUTPUT_PATH }}AzureFunctions.HttpBinding.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
+          draft: false
+          prerelease: true

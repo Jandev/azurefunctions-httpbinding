@@ -50,10 +50,26 @@ jobs:
     
     - name: Execute unit tests
       run: dotnet test
-    
+
     - name: Publish NuGet
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: HttpBinding/HttpBinding.csproj
         VERSION_STATIC: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
         NUGET_KEY: ${{secrets.NUGET_KEY}}
+
+    - name: Create NuGet package
+      run: dotnet pack ./HttpBinding/HttpBinding.csproj -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+
+    - name: Create release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: Release ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+        tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}          
+        files: |
+          ${{ env.OUTPUT_PATH }}AzureFunctions.HttpBinding.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
+        draft: false
+        prerelease: false
