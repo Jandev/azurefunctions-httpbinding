@@ -1,0 +1,59 @@
+name: Create new release
+
+env:
+  DOTNET_VERSION: "3.1.101"
+  OUTPUT_PATH: ${{ github.workspace }}/artifact/
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  create_release:
+    env:
+      ADR_PROJECT_FILE: "./src/adr/adr-cli.csproj"
+      WINDOWS_RUNTIME: "win7-x64"
+      UBUNTU_RUNTIME: "ubuntu.16.04-x64"
+      CONFIGURATION: "Release"
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Fetch all history for all tags and branches
+      run: git fetch --unshallow || true
+    
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.4
+      with:
+          versionSpec: '5.3.x'
+    
+    - name: Use GitVersion
+      id: gitversion # step id used as reference for output values
+      uses: gittools/actions/gitversion/execute@v0.9.4
+    
+    - run: |
+        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    
+    - name: Install dependencies
+      run: dotnet restore
+    
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Execute unit tests
+      run: dotnet test
+    
+    - name: Publish NuGet
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: HttpBinding/HttpBinding.csproj
+        VERSION_STATIC: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+        NUGET_KEY: ${{secrets.NUGET_KEY}}
