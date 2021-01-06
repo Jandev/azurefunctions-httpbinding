@@ -1,4 +1,4 @@
-name: Build & Release to NuGet
+name: Build & create a NuGet package
 
 on:
   workflow_dispatch:
@@ -41,5 +41,5 @@ jobs:
       - name: Execute unit tests
         run: dotnet test
       
-      - name: Create NuGet
+      - name: Create NuGet package
         run: dotnet pack -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}"
