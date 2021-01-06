@@ -47,4 +47,4 @@ jobs:
         run: dotnet test
       
       - name: Create NuGet package
-        run: dotnet pack -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        run: dotnet pack ./HttpBinding/HttpBinding.csproj -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}"
