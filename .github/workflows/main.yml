@@ -56,6 +56,7 @@ jobs:
           path: ${{ env.OUTPUT_PATH }}
 
       - name: Create release
+        if: github.ref == 'refs/heads/main'
         id: create_release
         uses: softprops/action-gh-release@v1
         env:
