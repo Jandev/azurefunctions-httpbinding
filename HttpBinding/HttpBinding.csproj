@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/Jandev/azurefunctions-httpbinding</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jandev/azurefunctions-httpbinding</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageLicenseFile>Apache-2.0</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>C#, Azure Functions, Binding, HTTP</PackageTags>
     <PackageReleaseNotes>- Initial version supporting input binding using GET and output binding using POST and PUT.
 - Added awesome package icon</PackageReleaseNotes>
