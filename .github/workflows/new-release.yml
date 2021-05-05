@@ -12,7 +12,6 @@ on:
 jobs:
   create_release:
     env:
-      ADR_PROJECT_FILE: "./src/adr/adr-cli.csproj"
       WINDOWS_RUNTIME: "win7-x64"
       UBUNTU_RUNTIME: "ubuntu.16.04-x64"
       CONFIGURATION: "Release"
