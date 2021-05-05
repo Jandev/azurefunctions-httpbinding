@@ -11,11 +11,6 @@ on:
 
 jobs:
   create_release:
-    env:
-      WINDOWS_RUNTIME: "win7-x64"
-      UBUNTU_RUNTIME: "ubuntu.16.04-x64"
-      CONFIGURATION: "Release"
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +21,7 @@ jobs:
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.9
       with:
-          versionSpec: '5.3.x'
+          versionSpec: '5.x'
     
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
