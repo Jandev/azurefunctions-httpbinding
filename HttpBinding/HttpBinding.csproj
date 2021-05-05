@@ -7,7 +7,7 @@
     <Product>Azure Functions HTTP Binding</Product>
     <Description>This project is created to provide a simple HTTP Binding for Azure Functions.</Description>
     <PackageProjectUrl>https://github.com/Jandev/azurefunctions-httpbinding</PackageProjectUrl>
-    <PackageLicenseFile>Apache License 2.0</PackageLicenseFile>
+    <PackageLicenseFile>Apache-2.0</PackageLicenseFile>
     <IconUrl>https://github.com/Jandev/azurefunctions-httpbinding/blob/main/HttpBinding/icon-logo.png</IconUrl>
     <RepositoryUrl>https://github.com/Jandev/azurefunctions-httpbinding</RepositoryUrl>
     <PackageTags>C#, Azure Functions, Binding, HTTP</PackageTags>
