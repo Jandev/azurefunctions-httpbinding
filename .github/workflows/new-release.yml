@@ -7,63 +7,63 @@ env:
 on:
   push:
     tags:
-      - '*.*.*'
+      - "*.*.*"
 
 jobs:
   create_release:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Fetch all history for all tags and branches
-      run: git fetch --unshallow || true
-    
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.9
-      with:
-          versionSpec: '5.x'
-    
-    - name: Use GitVersion
-      id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9.9
-    
-    - run: |
-        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
-    
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    
-    - name: Install dependencies
-      run: dotnet restore
-    
-    - name: Build solution
-      run: dotnet build --configuration Release --no-restore
-    
-    - name: Execute unit tests
-      run: dotnet test
+      - uses: actions/checkout@v2
+      - name: Fetch all history for all tags and branches
+        run: git fetch --unshallow || true
 
-    - name: Publish NuGet
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PROJECT_FILE_PATH: HttpBinding/HttpBinding.csproj
-        VERSION_STATIC: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
-        NUGET_KEY: ${{secrets.NUGET_KEY}}
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.13
+        with:
+          versionSpec: "5.x"
 
-    - name: Create NuGet package
-      run: dotnet pack ./HttpBinding/HttpBinding.csproj -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v0.9.13
 
-    - name: Create release
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        name: Release ${{ steps.gitversion.outputs.nuGetVersionV2 }}
-        tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}          
-        files: |
-          ${{ env.OUTPUT_PATH }}AzureFunctions.HttpBinding.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
-        draft: false
-        prerelease: false
+      - run: |
+          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+          echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Execute unit tests
+        run: dotnet test
+
+      - name: Publish NuGet
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: HttpBinding/HttpBinding.csproj
+          VERSION_STATIC: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
+
+      - name: Create NuGet package
+        run: dotnet pack ./HttpBinding/HttpBinding.csproj -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+
+      - name: Create release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Release ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+          files: |
+            ${{ env.OUTPUT_PATH }}AzureFunctions.HttpBinding.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
+          draft: false
+          prerelease: false

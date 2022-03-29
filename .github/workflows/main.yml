@@ -18,34 +18,34 @@ jobs:
 
       - name: Fetch all history for all tags and branches
         run: git fetch --unshallow || true
-      
+
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.9
+        uses: gittools/actions/gitversion/setup@v0.9.13
         with:
-            versionSpec: '5.x'
-      
+          versionSpec: "5.x"
+
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.9.9
-      
+        uses: gittools/actions/gitversion/execute@v0.9.13
+
       - run: |
           echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
           echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-      
+
       - name: Install dependencies
         run: dotnet restore
-      
+
       - name: Build solution
         run: dotnet build --configuration Release --no-restore
-      
+
       - name: Execute unit tests
         run: dotnet test
-      
+
       - name: Create NuGet package
         run: dotnet pack ./HttpBinding/HttpBinding.csproj -c Release -o ${{ env.OUTPUT_PATH }} /p:VersionPrefix=${{ steps.gitversion.outputs.nuGetVersionV2 }}
 
@@ -63,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Release ${{ steps.gitversion.outputs.nuGetVersionV2 }}
-          tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}          
+          tag_name: ${{ steps.gitversion.outputs.nuGetVersionV2 }}
           files: |
             ${{ env.OUTPUT_PATH }}AzureFunctions.HttpBinding.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg
           draft: false
